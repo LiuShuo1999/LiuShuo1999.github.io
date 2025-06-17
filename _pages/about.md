@@ -9,6 +9,8 @@ redirect_from:
 
 Hi, I’m Shuo Liu, a third-year Ph.D. candidate with the major of Computer Science and Technology from the School of Computer Science and Technology, Shandong University (SDU), Qingdao, China, advised by Prof. [Xiuzhen Cheng](https://scholar.google.com/citations?user=O1yGhH0AAAAJ&hl=en&oi=ao) and Prof. [Minghui Xu](http://minghuixu.com/). I am in [Blockchain and Distributed Security Lab](https://bc.sdu.edu.cn/).
 
+Email: 202220766 [AT] mail [DOT] sdu [DOT] edu [DOT] cn
+
 research interests: TODO
 
 # Working Experience
