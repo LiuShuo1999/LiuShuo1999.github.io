@@ -45,8 +45,11 @@ IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [C
 ## Conference Papers:
 
 - [IEEE INFOCOM'25] Partially Synchronous BFT Consensus Made Practical in Wireless Networks
+  
   **Shuo Liu**, Minghui Xu*, Yifei Zou, Xiuzhen Cheng, Wangjie Qiu, Gang Qu
+
   IEEE Conference on Computer Communications (INFOCOM), 2025 <font color='blue'> [CCF A] </font>
+
   [[paper](https://arxiv.org/pdf/2412.05512)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Sync)]
 
 - paper-2
