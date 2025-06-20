@@ -17,17 +17,29 @@ research interests: TODO
 
 ## Teaching Assistant
 
-Introduction to Cryptography, Teaching Assistant (TA)
+- Introduction to Cryptography
 
-School of Computer Science and Technology, Shandong University • Teacher: Prof. Minghui Xu
+  School of Computer Science and Technology, Shandong University
 
-Introduction to Blockchain, Teaching Assistant (TA)
+  Teacher: Prof. Minghui Xu
 
-School of Computer Science and Technology, Shandong University • Teacher: Prof. Minghui Xu
+  Fall 2021/22/23/24
 
-Information Security, Teaching Assistant (TA)
+- Introduction to Blockchain
 
-School of Computer Science and Technology, Shandong University • Teacher: Prof. Riccardo Spolaor
+  School of Computer Science and Technology, Shandong University
+
+  Teacher: Prof. Minghui Xu
+
+  Fall 2023/24
+  
+- Information Security
+
+  School of Computer Science and Technology, Shandong University
+
+  Teacher: Prof. Riccardo Spolaor
+
+  Spring 2022
 
 # Publications
 
