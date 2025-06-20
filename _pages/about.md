@@ -33,18 +33,18 @@ School of Computer Science and Technology, Shandong University • Teacher: Prof
 
 ## Journal Papers:
 
-[IEEE TC'22] CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA
+- CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA
 
-Minghui Xu, **Shuo Liu**, Dongxiao Yu*, Xiuzhen Cheng, Shaoyong Guo, Jiguo Yu
+  Minghui Xu, **Shuo Liu**, Dongxiao Yu*, Xiuzhen Cheng, Shaoyong Guo, Jiguo Yu
 
-IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [CCF A] </font>
+  IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [CCF A] </font>
 
-[[paper](https://ieeexplore.ieee.org/abstract/document/9699048)]
+  [[paper](https://ieeexplore.ieee.org/abstract/document/9699048)]
   
 
 ## Conference Papers:
 
-- [IEEE INFOCOM'25] Partially Synchronous BFT Consensus Made Practical in Wireless Networks
+- Partially Synchronous BFT Consensus Made Practical in Wireless Networks
   
   **Shuo Liu**, Minghui Xu*, Yifei Zou, Xiuzhen Cheng, Wangjie Qiu, Gang Qu
 
@@ -52,19 +52,10 @@ IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [C
 
   [[paper](https://arxiv.org/pdf/2412.05512)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Sync)]
 
-- paper-2
+- Asynchronous BFT Consensus Made Wireless
 
+  **Shuo Liu**, Minghui Xu*, Tianyi Sun, Xiuzhen Cheng
 
+  International Conference on Distributed Computing Systems (ICDCS), 2025 <font color='blue'>[CCF B]</font>
 
-
-
-
-
-
-[IEEE ICDCS'25] Asynchronous BFT Consensus Made Wireless
-
-**Shuo Liu**, Minghui Xu*, Tianyi Sun, Xiuzhen Cheng
-
-International Conference on Distributed Computing Systems (ICDCS), 2025 <font color='blue'>[CCF B]</font>
-  
-[[paper](https://arxiv.org/pdf/2503.21279)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Async)]
+  [[paper](https://arxiv.org/pdf/2503.21279)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Async)]
