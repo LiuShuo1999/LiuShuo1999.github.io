@@ -13,70 +13,79 @@ Email: 202220766 [AT] mail [DOT] sdu [DOT] edu [DOT] cn
 
 Research Interests: Byzantine fault-tolerant consensus
 
+## News
+
+---
+
+Todo
+
 # Peer-Reviewed Publications
 
-- CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA
+---
 
-  Minghui Xu, **Shuo Liu**, Dongxiao Yu*, Xiuzhen Cheng, Shaoyong Guo, Jiguo Yu
+* [Partially Synchronous BFT Consensus Made Practical in Wireless Networks](https://arxiv.org/pdf/2412.05512) [[code](https://github.com/BDS-SDU/WirelessConsensus-Sync)] <br>
 
-  IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [CCF A] </font>
-
-  [[paper](https://ieeexplore.ieee.org/abstract/document/9699048)]
-  
-- Partially Synchronous BFT Consensus Made Practical in Wireless Networks
-  
-  **Shuo Liu**, Minghui Xu*, Yifei Zou, Xiuzhen Cheng, Wangjie Qiu, Gang Qu
+  **Shuo Liu**, Minghui Xu*, Yifei Zou, Xiuzhen Cheng, Wangjie Qiu, Gang Qu <br>
 
   IEEE Conference on Computer Communications (INFOCOM), 2025 <font color='blue'> [CCF A] </font>
 
-  [[paper](https://arxiv.org/pdf/2412.05512)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Sync)]
+<!-- [INFOCOM 25]. -->
 
-- Asynchronous BFT Consensus Made Wireless
+* [Asynchronous BFT Consensus Made Wireless](https://arxiv.org/pdf/2503.21279) [[code](https://github.com/BDS-SDU/WirelessConsensus-Async)] <br>
 
-  **Shuo Liu**, Minghui Xu*, Tianyi Sun, Xiuzhen Cheng
+  **Shuo Liu**, Minghui Xu*, Tianyi Sun, Xiuzhen Cheng <br>
 
   International Conference on Distributed Computing Systems (ICDCS), 2025 <font color='blue'>[CCF B]</font>
 
-  [[paper](https://arxiv.org/pdf/2503.21279)] [[code](https://github.com/BDS-SDU/WirelessConsensus-Async)]
+<!-- [ICDCS 25]. -->
+
+* [CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA](https://ieeexplore.ieee.org/abstract/document/9699048) <br>
+
+  Minghui Xu, **Shuo Liu**, Dongxiao Yu*, Xiuzhen Cheng, Shaoyong Guo, Jiguo Yu <br>
+
+  IEEE Transactions on Computers, 71(12):3242–3253, 2022, <font color='blue'> [CCF A] </font>
+
+<!-- [TC 22]. -->
 
 # Academic Services
 
-- Program Committee
+---
 
-  EuroSys'26 Shadow PC
+**PC Member at Conferences:**
 
-- Referee of Journals
+* EuroSys'26 Shadow PC
 
-  Transactions on Information Forensics and Security (TIFS)
-
-  Transactions on Mobile Computing (TMC)
-
-  Transactions on Computers (TC)
-
-  Transactions on Wireless Communication (TWC)
+**Reviewer for Journals:**
+  
+* Transactions on Information Forensics and Security (TIFS)
+* Transactions on Mobile Computing (TMC) 
+* Transactions on Computers (TC)
+* Transactions on Wireless Communication (TWC)
 
 # Teaching Assistant
 
-- Introduction to Cryptography
+---
 
-  School of Computer Science and Technology, Shandong University
-
-  Teacher: Prof. Minghui Xu
-
-  Fall 2021/22/23/24
-
-- Introduction to Blockchain
-
-  School of Computer Science and Technology, Shandong University
-
-  Teacher: Prof. Minghui Xu
-
-  Fall 2023/24
+* **Introduction to Cryptography**
   
-- Information Security
-
   School of Computer Science and Technology, Shandong University
+  
+  Teacher: Prof. Minghui Xu
+  
+  Fall 2021/22/23/24/25
 
+* **Introduction to Blockchain**
+  
+  School of Computer Science and Technology, Shandong University
+  
+  Teacher: Prof. Minghui Xu
+  
+  Fall 2023/24/25
+
+* **Information Security**
+  
+  School of Computer Science and Technology, Shandong University
+  
   Teacher: Prof. Riccardo Spolaor
-
+  
   Spring 2022
