@@ -17,12 +17,49 @@ I am a proud member of the [**Blockchain and Distributed Security Lab**](https:/
 
 # 🔥 News
 
-* **[2025.11]** 🏆 Honored to receive the **President Scholarship of Shandong University** (the highest honor for SDU students)!
-* **[2025.06]** 🏛️ Selected as a **Shadow PC Member for EuroSys 2026**.
-* **[2025.05]** 🚀 Our first developed **Satellite Consensus** protocols were successfully launched into space aboard the **Tiansuan Constellation** satellites (BUPT-2 and BUPT-3)!
-* **[2025.03]** 🎉 One paper titled **"Asynchronous BFT Consensus Made Wireless"** has been accepted by **ICDCS 2025**!
-* **[2024.12]** 🎉 One paper titled **"Partially Synchronous BFT Consensus Made Practical in Wireless Networks"** has been accepted by **INFOCOM 2025**!
-* **[2024.10]** 📘 The book **"Wireless Consensus: Theory and Applications"** (contributed as a core member) is now available on **Springer**.
+<div style="width: 100%; text-align: left;">
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2025.11]</div>
+    <div style="flex: 1;">
+      🏆 Honored to receive the <strong>President Scholarship of Shandong University</strong> (the highest honor for SDU students)!
+    </div>
+  </div>
+  
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2025.06]</div>
+    <div style="flex: 1;">
+      🏛️ Selected as a <strong>Shadow PC Member for EuroSys 2026</strong>.
+    </div>
+  </div>
+
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2025.05]</div>
+    <div style="flex: 1;">
+      🚀 Our first developed <strong>Satellite Consensus</strong> system was successfully launched into space aboard the <strong>Tiansuan Constellation</strong> satellites (BUPT-2 and BUPT-3).
+    </div>
+  </div>
+
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2025.03]</div>
+    <div style="flex: 1;">
+      🎉 One paper titled <strong>"Asynchronous BFT Consensus Made Wireless"</strong> has been accepted by <strong>ICDCS 2025</strong>.
+    </div>
+  </div>
+
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2024.12]</div>
+    <div style="flex: 1;">
+      🎉 One paper titled <strong>"Partially Synchronous BFT Consensus Made Practical in Wireless Networks"</strong> has been accepted by <strong>INFOCOM 2025</strong>.
+    </div>
+  </div>
+
+  <div style="display: flex; margin-bottom: 8px;">
+    <div style="flex: 0 0 90px; font-weight: bold;">[2024.10]</div>
+    <div style="flex: 1;">
+      📘 The book <strong>"Wireless Consensus: Theory and Applications"</strong> (contributed as a core member) is now available on <strong>Springer</strong>.
+    </div>
+  </div>
+</div>
 
 # 📝 Selected Publications
 
