@@ -7,15 +7,13 @@ redirect_from:
   - /about.html
 ---
 
-I am a third-year Ph.D. candidate majoring in Computer Science and Technology at the **School of Computer Science and Technology, Shandong University (SDU)**, Qingdao, China. 
+I am a Ph.D. candidate majoring in Computer Science and Technology at the **School of Computer Science and Technology, Shandong University (SDU)**, Qingdao, China. 
 
-I am a proud member of the [**Blockchain and Distributed Security Lab**](https://bc.sdu.edu.cn/), advised by Prof. [**Xiuzhen Cheng**](https://scholar.google.com/citations?user=O1yGhH0AAAAJ&hl=en&oi=ao) and Prof. [**Minghui Xu**](http://minghuixu.com/).
+I am a proud member of the [**Blockchain and Distributed Security Lab**](https://bc.sdu.edu.cn/), advised by Prof. [**Minghui Xu**](http://minghuixu.com/) and Prof. [**Xiuzhen Cheng**](https://scholar.google.com/citations?user=O1yGhH0AAAAJ&hl=en&oi=ao).
 
 📍 **Research Interests:** Byzantine Fault-Tolerant (BFT) Consensus, Secure Coordination of Unmanned Swarms.
 
 📧 **Email:** `202220766 [AT] mail.sdu.edu.cn`
-
----
 
 # 🔥 News
 
