@@ -56,6 +56,11 @@ I am a Ph.D. candidate at the <b>School of Computer Science and Technology, Shan
     <div style="flex: 1;">🎉 Paper <i>"Partially Synchronous BFT Consensus..."</i> accepted by <b>INFOCOM 2025</b>.</div>
   </div>
 
+  <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
+    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.10</span>
+    <div style="flex: 1;">📘 The book <strong>"Wireless Consensus: Theory and Applications"</strong> (contributed as a core member) is now available on <strong>Springer</strong></div>
+  </div>
+
 </div>
 
 ---
