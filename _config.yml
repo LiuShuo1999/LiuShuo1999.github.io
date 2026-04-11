@@ -215,6 +215,9 @@ kramdown:
 
 # These settings control the types of collections used by the template
 collections:
+  notes:
+    output: true
+    permalink: /notes/:path/
   teaching:
     output: true
     permalink: /:collection/:path/
@@ -258,6 +261,15 @@ defaults:
       author_profile: true
       share: true
       comments: true
+  # _notes
+  - scope:
+      path: ""
+      type: notes
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comments: false
   # _publications
   - scope:
       path: ""

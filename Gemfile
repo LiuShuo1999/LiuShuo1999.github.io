@@ -11,3 +11,6 @@ end
 
 gem 'github-pages'
 gem 'connection_pool', '2.5.0'
+gem 'csv'
+gem 'bigdecimal'
+gem 'logger', '1.6.0'
