@@ -1,15 +1,41 @@
 ---
 layout: archive
-title: "Notes"
+title: "机器人中间件 Notes"
 permalink: /notes/
 author_profile: true
+toc: true
 ---
 
 {% include base_path %}
 
-这里放公开版研究笔记。内容来自本地 Obsidian 笔记，但发布前会做筛选、改写和链接调整，因此不会与本地版本完全一致。
+# 说明
 
-{% assign notes_sorted = site.notes | sort: "date" | reverse %}
-{% for post in notes_sorted %}
-  {% include archive-single.html %}
-{% endfor %}
+机器人中间件目前主要按两条线探索：一条是 `前沿探索`，一条是 `基础笔记`。
+
+`前沿探索` 更偏学术界与工业界双视角下的持续观察，重点放在趋势变化、公开问题、路线图、选型分歧、安全边界，以及不同中间件在真实场景里的演进方向。
+
+`基础笔记` 更偏系统化整理，按统一的整理标准去补概念、机制、架构、接口关系和实现脉络，尽量把每个主题都整理成后续还能继续扩展的笔记结构。
+
+## 前沿探索
+
+- 这一部分会把学术界关注的问题、工业界的采用路径，以及官方材料里反复出现的长期难题放在一起看。
+- 目前先按这几个主题来整理：
+  - `主线与方法`
+  - `公开问题与路线图`
+  - `ROS 2 / DDS` 主轴专题
+  - `Dora` 专题
+  - `双视角与安全`
+  - `图谱与资料`
+  - `研究笔记`
+
+## 基础笔记
+
+- 这一部分更偏概念、机制、架构、实现和系统理解。
+- 整理时会尽量保持统一结构，方便后续继续补充，也方便不同中间件之间横向对照。
+- 接下来会优先整理这些主题：
+  - `ROS 2`：节点、通信模型、executor、QoS、discovery、`rmw` 分层。
+  - `DDS`：核心概念、QoS 语义、发现机制、vendor 差异，以及和 `ROS 2` 的关系。
+  - `Zenoh`：数据空间、router、query / pub-sub、跨网络拓扑，以及和 `DDS / ROS 2` 的连接方式。
+  - `Dora`：dataflow、operator、runtime、桥接机制，以及分布式执行方式。
+  - `HORUS`：registry、图式组织方式、运行机制，以及与现有机器人系统的衔接。
+  - `Copper`：任务编排、运行时模型、Rust 工程结构，以及系统实现路径。
