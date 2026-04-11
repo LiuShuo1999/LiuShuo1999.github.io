@@ -27,6 +27,8 @@ toc: true
   - `双视角与安全`
   - `图谱与资料`
   - `研究笔记`
+- 已整理的公开笔记：
+  - [机器人中间件：roadmap 与公开规划入口总表](/notes/robot-middleware-roadmap-planning-index/)
 
 ## 基础笔记
 
