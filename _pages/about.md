@@ -22,8 +22,21 @@ I am a Ph.D. candidate at the <b>School of Computer Science and Technology, Shan
   <ul style="margin-bottom:0;">
     <li><b>Distributed Systems:</b> Byzantine Fault-Tolerant (BFT) Consensus.</li>
     <li><b>Wireless Networking:</b> Secure Coordination of Unmanned Swarms & Satellite Networks.</li>
+    <li><b>Robotics Systems:</b> Reliable, secure, and hardware-aware runtime support for ROS 2, physical AI, and networked robot swarms.</li>
   </ul>
 </div>
+
+---
+
+# <i class="fa fa-microchip"></i> Current Direction
+
+<p align="justify">
+I am currently exploring the systems layer beneath <b>ROS 2 physical AI</b>: how learned robot policies can be executed reliably over real robots, heterogeneous hardware, and networked robot teams. I am particularly interested in hardware-aware data paths, zero-copy transport, native buffers/tensors, real-time policy execution, and the reliability/security problems that appear when physical-AI workloads leave the lab and run on swarms, wireless links, and edge devices.
+</p>
+
+<p align="justify">
+My long-term goal is to connect my background in BFT consensus, wireless networking, and unmanned-swarm coordination with the emerging ROS 2 physical-AI ecosystem, building runtime support that makes robot learning systems more dependable, observable, and deployable.
+</p>
 
 ---
 
@@ -133,5 +146,5 @@ I am a Ph.D. candidate at the <b>School of Computer Science and Technology, Shan
 
 <br>
 <p align="center">
-  <img src="https://komarev.com/ghpvc/?username=your-github-username&label=Profile%20views&color=0e75b6&style=flat" alt="Views" />
+  <img src="https://komarev.com/ghpvc/?username=LiuShuo1999&label=Profile%20views&color=0e75b6&style=flat" alt="Views" />
 </p>
