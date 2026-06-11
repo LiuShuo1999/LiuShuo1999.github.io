@@ -31,12 +31,25 @@ I am a Ph.D. candidate at the <b>School of Computer Science and Technology, Shan
 # <i class="fa fa-microchip"></i> Current Direction
 
 <p align="justify">
-I am currently exploring the systems layer beneath <b>ROS 2 physical AI</b>: how learned robot policies can be executed reliably over real robots, heterogeneous hardware, and networked robot teams. I am particularly interested in hardware-aware data paths, zero-copy transport, native buffers/tensors, real-time policy execution, and the reliability/security problems that appear when physical-AI workloads leave the lab and run on swarms, wireless links, and edge devices.
+I am currently exploring the systems layer of robot middleware for embodied AI: how learned robot policies can be executed reliably across real robots and networked robot teams. I am particularly interested in the performance, reliability, and security challenges of deploying embodied-AI systems in real-world environments.
 </p>
 
 <p align="justify">
-My long-term goal is to connect my background in BFT consensus, wireless networking, and unmanned-swarm coordination with the emerging ROS 2 physical-AI ecosystem, building runtime support that makes robot learning systems more dependable, observable, and deployable.
+My long-term goal is to build dependable and scalable systems infrastructure for embodied AI, enabling robots to operate safely and efficiently in real-world environments, both individually and as part of multi-robot systems. Toward this goal, I am interested in several directions: robust coordination and collective decision-making for multi-robot systems using wireless BFT consensus; system-level support for embodied AI, such as ROS 2 and Dora, with a focus on improving the reliability, efficiency, and security of robot learning workloads in real-world environments.
 </p>
+
+<div style="margin: 24px 0 8px; padding: 22px; border-radius: 18px; background: linear-gradient(135deg, #0f172a 0%, #14532d 48%, #0e7490 100%); box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22); color: white; position: relative; overflow: hidden;">
+  <div style="position: absolute; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.12); right: -55px; top: -70px;"></div>
+  <div style="position: absolute; width: 110px; height: 110px; border-radius: 50%; background: rgba(255,255,255,0.10); left: -35px; bottom: -45px;"></div>
+  <div style="position: relative; z-index: 1;">
+    <div style="font-size: 0.82em; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.82; margin-bottom: 6px;">Interactive Artifact</div>
+    <div style="font-size: 1.15em; font-weight: 700; margin-bottom: 8px;">Robot Middleware Issue Relation Explorer</div>
+    <div style="font-size: 0.95em; opacity: 0.9; margin-bottom: 16px;">Explore ROS 2 and Dora issue relations across issues, PRs, commits, affected modules, and evidence links.</div>
+    <a href="/files/robot-middleware-issue-relation-explorer.html" target="_blank" rel="noopener noreferrer" style="display: inline-block; text-decoration: none; color: #0f172a; background: #ffffff; padding: 11px 18px; border-radius: 999px; font-weight: 800; box-shadow: 0 10px 25px rgba(0,0,0,0.18);">
+      <i class="fa fa-project-diagram"></i> Open Interactive Explorer
+    </a>
+  </div>
+</div>
 
 ---
 
