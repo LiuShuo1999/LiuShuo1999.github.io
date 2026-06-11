@@ -58,42 +58,42 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 <div style="max-height: 280px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px;">
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.03</span>
+    <span style="background: #355c8a; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2026.04</span>
     <div style="flex: 1;">🎉 Paper <i>"OrbitBFT: Enabling Scalable and Robust BFT Consensus in LEO Constellations"</i> accepted by <b>ICDCS 2026</b>.</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.11</span>
+    <span style="background: #c65b4b; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.11</span>
     <div style="flex: 1;">🏆 Honored to receive the <b>President Scholarship of Shandong University</b> (The highest honor for SDU students)!</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #3498db; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.06</span>
+    <span style="background: #4b88c7; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.06</span>
     <div style="flex: 1;">🏛️ Selected as a <b>Shadow PC Member for EuroSys 2026</b>.</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #2ecc71; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.05</span>
+    <span style="background: #3e9b74; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.05</span>
     <div style="flex: 1;">🚀 Our <b>Satellite Consensus</b> system was successfully launched into space aboard the <b>Tiansuan Constellation</b> (BUPT-2/3).</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.03</span>
+    <span style="background: #486a94; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.03</span>
     <div style="flex: 1;">🎉 Paper <i>"Asynchronous BFT Consensus Made Wireless"</i> accepted by <b>ICDCS 2025</b>.</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
+    <span style="background: #5b5fa8; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
     <div style="flex: 1;">🎉 Paper <i>"Partially Synchronous BFT Consensus Made Practical in Wireless Networks"</i> accepted by <b>INFOCOM 2025</b>.</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.10</span>
+    <span style="background: #9a6a3a; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.10</span>
     <div style="flex: 1;">📘 The book <strong>"Wireless Consensus: Theory and Applications"</strong> (contributed as a core member) is now available on <strong>Springer</strong></div>
   </div>
   
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
-    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
+    <span style="background: #6d5aa8; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
     <div style="flex: 1;">🎉 Paper <i>"CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA"</i> accepted by <b>IEEE TC 2025</b>.</div>
   </div>
 
@@ -109,7 +109,7 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 <div style="padding: 15px; border: 1px solid #efefef; border-radius: 8px; margin-bottom: 15px; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
     <div style="font-weight: bold; font-size: 1.1em;">OrbitBFT: Enabling Scalable and Robust BFT Consensus in LEO Constellations</div>
     <div style="margin: 5px 0;">Tianyi Sun*, <b>Shuo Liu*</b>, Minghui Xu, Xiuzhen Cheng</div>
-    <i>IEEE ICDCS 2025</i> <br>
+    <i>IEEE ICDCS 2026</i> <br>
     <div style="margin-top: 8px;">
       <span style="background: #003366; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em;">CCF B</span>
       <a href="https://arxiv.org/pdf/2605.08132" style="text-decoration:none;"><span style="background: #b31b1b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px;"><i class="fa fa-file-pdf"></i> PDF</span></a>
@@ -147,6 +147,7 @@ My long-term goal is to build dependable and scalable systems infrastructure for
   <i>IEEE Transactions on Computers, 2022</i> <br>
   <div style="margin-top: 8px;">
     <span style="background: #cc0000; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em;">CCF A</span>
+    <a href="https://ieeexplore.ieee.org/abstract/document/9699048" style="text-decoration:none;"><span style="background: #b31b1b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px;"><i class="fa fa-file-pdf"></i> PDF</span></a>
   </div>
 </div>
 
@@ -172,7 +173,7 @@ My long-term goal is to build dependable and scalable systems infrastructure for
   <tr>
     <td style="padding: 10px; border-bottom: 1px solid #eee;">Introduction to Cryptography</td>
     <td style="padding: 10px; border-bottom: 1px solid #eee;">Teaching Assistant</td>
-    <td style="padding: 10px; border-bottom: 1px solid #eee;">Fall 2021–2025</td>
+    <td style="padding: 10px; border-bottom: 1px solid #eee;">Fall 2021–2026</td>
   </tr>
   <tr>
     <td style="padding: 10px; border-bottom: 1px solid #eee;">Introduction to Blockchain</td>
