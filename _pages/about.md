@@ -58,6 +58,11 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 <div style="max-height: 280px; overflow-y: auto; padding: 10px; border: 1px solid #eee; border-radius: 8px;">
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
+    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.03</span>
+    <div style="flex: 1;">🎉 Paper <i>"OrbitBFT: Enabling Scalable and Robust BFT Consensus in LEO Constellations"</i> accepted by <b>ICDCS 2026</b>.</div>
+  </div>
+
+  <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
     <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2025.11</span>
     <div style="flex: 1;">🏆 Honored to receive the <b>President Scholarship of Shandong University</b> (The highest honor for SDU students)!</div>
   </div>
@@ -79,12 +84,17 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
     <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
-    <div style="flex: 1;">🎉 Paper <i>"Partially Synchronous BFT Consensus..."</i> accepted by <b>INFOCOM 2025</b>.</div>
+    <div style="flex: 1;">🎉 Paper <i>"Partially Synchronous BFT Consensus Made Practical in Wireless Networks"</i> accepted by <b>INFOCOM 2025</b>.</div>
   </div>
 
   <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
     <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.10</span>
     <div style="flex: 1;">📘 The book <strong>"Wireless Consensus: Theory and Applications"</strong> (contributed as a core member) is now available on <strong>Springer</strong></div>
+  </div>
+  
+  <div style="display: flex; margin-bottom: 15px; align-items: flex-start;">
+    <span style="background: #34495e; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 15px;">2024.12</span>
+    <div style="flex: 1;">🎉 Paper <i>"CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA"</i> accepted by <b>IEEE TC 2025</b>.</div>
   </div>
 
 </div>
@@ -95,6 +105,17 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 
 <div style="margin-bottom: 25px;">
   <h3 style="border-bottom: none;">Conference Papers</h3>
+
+<div style="padding: 15px; border: 1px solid #efefef; border-radius: 8px; margin-bottom: 15px; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+    <div style="font-weight: bold; font-size: 1.1em;">OrbitBFT: Enabling Scalable and Robust BFT Consensus in LEO Constellations</div>
+    <div style="margin: 5px 0;">Tianyi Sun*, <b>Shuo Liu*</b>, Minghui Xu, Xiuzhen Cheng</div>
+    <i>IEEE ICDCS 2025</i> <br>
+    <div style="margin-top: 8px;">
+      <span style="background: #003366; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em;">CCF B</span>
+      <a href="https://arxiv.org/pdf/2605.08132" style="text-decoration:none;"><span style="background: #b31b1b; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px;"><i class="fa fa-file-pdf"></i> PDF</span></a>
+      <a href="https://github.com/BDS-SDU/WirelessConsensus-Satellite" style="text-decoration:none;"><span style="background: #333; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em; margin-left: 5px;"><i class="fab fa-github"></i> Code</span></a>
+    </div>
+  </div>
 
   <div style="padding: 15px; border: 1px solid #efefef; border-radius: 8px; margin-bottom: 15px; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
     <div style="font-weight: bold; font-size: 1.1em;">Asynchronous BFT Consensus Made Wireless</div>
@@ -120,11 +141,14 @@ My long-term goal is to build dependable and scalable systems infrastructure for
 </div>
 
 <h3 style="border-bottom: none;">Journal Articles</h3>
-<ul>
-  <li><b>[TC '22]</b> <b>CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA</b>. <br> 
-  Minghui Xu, <b>Shuo Liu</b>, Dongxiao Yu, Xiuzhen Cheng, et al. <i>IEEE Transactions on Computers</i>. 
-  <span style="color: #cc0000; font-weight: bold;">[CCF A]</span></li>
-</ul>
+<div style="padding: 15px; border: 1px solid #efefef; border-radius: 8px; margin-bottom: 15px; transition: 0.3s;" onmouseover="this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-weight: bold; font-size: 1.1em;">CloudChain: A Cloud Blockchain Using Shared Memory Consensus and RDMA</div>
+  <div style="margin: 5px 0;">Minghui Xu, <b>Shuo Liu</b>, Dongxiao Yu, Xiuzhen Cheng, et al.</div>
+  <i>IEEE Transactions on Computers, 2022</i> <br>
+  <div style="margin-top: 8px;">
+    <span style="background: #cc0000; color: white; padding: 2px 6px; border-radius: 3px; font-size: 0.8em;">CCF A</span>
+  </div>
+</div>
 
 ---
 
