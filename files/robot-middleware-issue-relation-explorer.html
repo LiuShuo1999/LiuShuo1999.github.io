@@ -193,6 +193,12 @@
     body.graph-expanded .shell { display: block; padding: 14px; }
     body.graph-expanded .main { height: calc(100vh - 28px); min-height: 0; }
     body.graph-expanded .content, body.graph-expanded .view.active, body.graph-expanded .multi-hop-wrap { height: 100%; min-height: 0; }
+    body.graph-expanded .multi-hop-toolbar {
+      position: fixed; left: 22px; right: 22px; top: 18px; z-index: 50;
+    }
+    body.graph-expanded #multiHopFull {
+      background: var(--ink); color: #fff; border-color: var(--ink);
+    }
     body.multi-hop-active .main {
       height: auto;
       min-height: 1200px;
