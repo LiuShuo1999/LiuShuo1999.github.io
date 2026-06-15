@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Multi-hop Issue Relation Network</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #64748b;
+      --line: rgba(23, 33, 43, .14);
+      --panel: rgba(255,255,255,.86);
+      --root: #17212b;
+      --issue: #2f7d59;
+      --pr: #1f6f8b;
+      --commit: #a86112;
+      --external-issue: #8a4fb3;
+      --non-core: #7f5a13;
+      --accent: #c35b2f;
+      --shadow: 0 24px 80px rgba(23,33,43,.16);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; color: var(--ink);
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(47,125,89,.20), transparent 28rem),
+        radial-gradient(circle at 90% 12%, rgba(31,111,139,.22), transparent 30rem),
+        radial-gradient(circle at 68% 96%, rgba(195,91,47,.16), transparent 34rem),
+        linear-gradient(135deg, #f8f4e8 0%, #edf6f2 50%, #f4efe4 100%);
+    }
+    header { padding: 24px 28px 12px; display: flex; justify-content: space-between; gap: 18px; align-items: end; }
+    h1 { margin: 0; font-size: clamp(32px, 4vw, 60px); line-height: .94; letter-spacing: -.045em; }
+    a { color: var(--pr); font-weight: 800; text-decoration: none; }
+    .subtitle, .meta { color: var(--muted); font: 13px ui-sans-serif, system-ui, sans-serif; }
+    .subtitle { margin-top: 8px; }
+    .shell { display: grid; grid-template-columns: 430px minmax(0, 1fr); gap: 16px; padding: 0 20px 20px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+    .sidebar { height: calc(100vh - 92px); min-height: 760px; padding: 12px; display: flex; flex-direction: column; }
+    .controls { display: grid; gap: 8px; }
+    input, select {
+      width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px;
+      background: rgba(255,255,255,.78); color: var(--ink); outline: none;
+      font: 13px ui-sans-serif, system-ui, sans-serif;
+    }
+    .filters { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .triple { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .summary { color: var(--muted); font: 11px ui-sans-serif, system-ui, sans-serif; padding-left: 4px; }
+    .issue-list { flex: 1; min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 7px; margin-top: 9px; padding-right: 4px; }
+    .issue-card { border: 1px solid var(--line); border-radius: 13px; padding: 8px; background: rgba(255,255,255,.62); cursor: pointer; transition: .16s ease; }
+    .issue-card:hover, .issue-card.active { background: white; border-color: rgba(31,111,139,.48); transform: translateY(-1px); }
+    .issue-card strong { display: -webkit-box; font-size: 12px; line-height: 1.2; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .issue-card small { display: block; margin-top: 4px; color: var(--muted); font: 10px/1.25 ui-sans-serif, system-ui, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .module { margin-top: 4px; color: #365344; font: 10px/1.25 ui-sans-serif, system-ui, sans-serif; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    .pills { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px; }
+    .pill { border-radius: 999px; padding: 2px 5px; font: 10px ui-sans-serif, system-ui, sans-serif; background: rgba(31,111,139,.1); color: var(--pr); }
+    .pill.issue { color: var(--issue); background: rgba(47,125,89,.11); }
+    .pill.commit { color: var(--commit); background: rgba(168,97,18,.12); }
+    .pill.score { color: #7a3f22; background: rgba(195,91,47,.14); font-weight: 900; }
+    .main { height: calc(100vh - 92px); min-height: 760px; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; overflow: hidden; }
+    .hero { padding: 17px 20px 13px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; }
+    .hero h2 { margin: 0; font-size: clamp(22px, 2.6vw, 38px); letter-spacing: -.035em; line-height: 1.02; }
+    .stats { display: grid; grid-template-columns: repeat(5, 86px); gap: 8px; }
+    .stat { border: 1px solid var(--line); background: rgba(255,255,255,.66); border-radius: 16px; text-align: center; padding: 9px; }
+    .stat b { display: block; font: 800 23px ui-sans-serif, system-ui, sans-serif; letter-spacing: -.04em; }
+    .stat span { color: var(--muted); font: 10px ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .08em; }
+    .graph-wrap { position: relative; min-height: 0; overflow: hidden; cursor: grab; }
+    .graph-wrap.panning { cursor: grabbing; }
+    svg { width: 100%; height: 100%; display: block; touch-action: none; }
+    .edge { stroke: rgba(23,33,43,.20); stroke-width: 1.4; }
+    .edge.hop1 { stroke: rgba(23,33,43,.44); stroke-width: 2.4; }
+    .edge.hop2 { stroke: rgba(31,111,139,.32); stroke-width: 1.8; }
+    .time-axis .axis-line { stroke: rgba(23,33,43,.38); stroke-width: 2; }
+    .time-axis .tick-line { stroke: rgba(23,33,43,.12); stroke-width: 1; stroke-dasharray: 5 8; }
+    .time-axis .tick-mark { stroke: rgba(23,33,43,.42); stroke-width: 1.8; }
+    .time-axis text { fill: #526173; font: 12px ui-sans-serif, system-ui, sans-serif; paint-order: stroke; stroke: rgba(255,255,255,.88); stroke-width: 4px; stroke-linejoin: round; }
+    .time-axis .axis-title { fill: #17212b; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .node { cursor: pointer; filter: drop-shadow(0 8px 14px rgba(23,33,43,.12)); }
+    .node circle { stroke-width: 3; }
+    .node.issue circle { fill: rgba(47,125,89,.86); stroke: rgba(47,125,89,1); }
+    .node.external_issue circle { fill: rgba(138,79,179,.88); stroke: rgba(112,62,148,1); }
+    .node.non_core circle { fill: rgba(127,90,19,.84); stroke: rgba(127,90,19,1); stroke-dasharray: 5 3; }
+    .node.pull_request circle { fill: rgba(31,111,139,.88); stroke: rgba(31,111,139,1); }
+    .node.commit circle { fill: rgba(168,97,18,.88); stroke: rgba(168,97,18,1); }
+    .node.root circle { fill: var(--root); stroke: white; stroke-width: 4; }
+    .node.closed circle, .node.merged circle { stroke: #7e8792; }
+    .node text { pointer-events: none; fill: #17212b; font: 11px ui-sans-serif, system-ui, sans-serif; paint-order: stroke; stroke: rgba(255,255,255,.92); stroke-width: 4px; stroke-linejoin: round; }
+    .tooltip {
+      position: absolute; z-index: 5; max-width: 420px; pointer-events: none; opacity: 0; transform: translate(-50%, calc(-100% - 12px));
+      background: rgba(23,33,43,.94); color: #fff; border-radius: 14px; padding: 10px 12px; font: 12px/1.4 ui-sans-serif, system-ui, sans-serif;
+      box-shadow: 0 18px 50px rgba(23,33,43,.22);
+    }
+    .tooltip b { display: block; margin-bottom: 4px; font-size: 13px; }
+    .graph-tools {
+      position: absolute; right: 14px; bottom: 14px; z-index: 4;
+      display: flex; gap: 7px; align-items: center; flex-wrap: wrap; justify-content: flex-end;
+      max-width: min(760px, calc(100% - 28px));
+    }
+    .graph-tools button, .graph-hint {
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.82);
+      color: var(--muted); padding: 7px 10px; font: 800 11px ui-sans-serif, system-ui, sans-serif;
+      box-shadow: 0 10px 28px rgba(23,33,43,.12); backdrop-filter: blur(10px);
+    }
+    .graph-tools button { cursor: pointer; color: var(--pr); }
+    .graph-tools button:hover { background: #fff; }
+    .non-core-panel {
+      position: absolute; right: 14px; top: 14px; z-index: 6; width: min(420px, calc(100% - 28px)); max-height: calc(100% - 28px);
+      display: none; overflow: hidden; background: rgba(255,255,255,.94); border: 1px solid var(--line); border-radius: 18px;
+      box-shadow: 0 18px 58px rgba(23,33,43,.18); backdrop-filter: blur(12px);
+    }
+    .non-core-panel.open { display: grid; grid-template-rows: auto auto minmax(0, 1fr); }
+    .non-core-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 12px 8px; }
+    .non-core-head strong { font: 900 13px ui-sans-serif, system-ui, sans-serif; }
+    .non-core-head button, .non-core-form button, .non-core-row button {
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.8); color: var(--pr);
+      padding: 6px 9px; font: 800 11px ui-sans-serif, system-ui, sans-serif; cursor: pointer;
+    }
+    .non-core-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; padding: 0 12px 10px; }
+    .non-core-form input { min-width: 0; }
+    .non-core-list { overflow: auto; padding: 0 12px 12px; display: grid; gap: 6px; }
+    .non-core-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: start; border: 1px solid var(--line); border-radius: 12px; padding: 8px; background: rgba(255,255,255,.68); }
+    .non-core-row b { display: block; font: 800 12px ui-sans-serif, system-ui, sans-serif; overflow-wrap: anywhere; }
+    .non-core-row span { display: block; color: var(--muted); font: 10px/1.35 ui-sans-serif, system-ui, sans-serif; margin-top: 3px; }
+    .node-type-toggle {
+      display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(255,255,255,.72); box-shadow: 0 10px 28px rgba(23,33,43,.12); backdrop-filter: blur(10px);
+    }
+    .node-type-toggle button, .layout-toggle button {
+      box-shadow: none; background: transparent; border-color: transparent; padding: 5px 8px; color: var(--muted);
+    }
+    .node-type-toggle button.active, .layout-toggle button.active {
+      color: white; border-color: transparent; background: linear-gradient(135deg, var(--issue), var(--pr));
+    }
+    .layout-toggle {
+      display: flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 999px;
+      background: rgba(255,255,255,.72); box-shadow: 0 10px 28px rgba(23,33,43,.12); backdrop-filter: blur(10px);
+    }
+    body.graph-expanded { overflow: hidden; }
+    body.graph-expanded header, body.graph-expanded .sidebar { display: none; }
+    body.graph-expanded .shell { display: block; padding: 14px; }
+    body.graph-expanded .main { height: calc(100vh - 28px); min-height: 0; }
+    .footer { padding: 10px 18px 16px; display: flex; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); color: var(--muted); font: 12px ui-sans-serif, system-ui, sans-serif; }
+    .dot { width: 11px; height: 11px; border-radius: 999px; display: inline-block; vertical-align: -1px; margin-right: 5px; }
+    @media (max-width: 1060px) {
+      header { align-items: start; flex-direction: column; }
+      .shell { grid-template-columns: 1fr; }
+      .sidebar, .main { height: auto; min-height: 720px; }
+      .issue-list { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Combined Multi-hop Issue Relation Network</h1>
+      <div class="subtitle">Phase1 + Phase2 issue relation graph. Expand from one high-value issue to every reachable relation hop, with zoom, pan, and timeline navigation.</div>
+    </div>
+    <div class="subtitle" id="datasetInfo"></div>
+  </header>
+  <main class="shell">
+    <aside class="panel sidebar">
+      <div class="controls">
+        <input id="search" placeholder="Search issue id, title, repo, module..." />
+        <div class="filters">
+          <select id="phaseFilter"><option value="all">All phases</option></select>
+          <select id="targetFilter"><option value="all">All targets</option></select>
+        </div>
+        <div class="filters">
+          <select id="repoFilter"><option value="all">All repos</option></select>
+          <select id="stateFilter"><option value="all">All states</option><option value="open">Open roots</option><option value="closed">Closed roots</option></select>
+        </div>
+        <div class="filters">
+          <select id="hopLimit"></select>
+          <select id="layoutMode"><option value="ring">Hop rings layout</option><option value="timeline">Timeline layout</option></select>
+        </div>
+        <div class="filters">
+          <select id="nodeTypeFilter"><option value="issue">Issues only</option><option value="pull_request">Issues + PRs</option><option value="commit">Issues + commits</option><option value="all">Issues + PRs + commits</option></select>
+          <select id="sortMode"><option value="score">Sort score</option><option value="edges">Sort edges</option><option value="updated">Sort updated</option></select>
+        </div>
+        <div class="filters">
+          <select id="externalIssueFilter"><option value="show">Show external issues</option><option value="hide">Hide external issues</option></select>
+        </div>
+        <div class="summary" id="listSummary"></div>
+      </div>
+      <div class="issue-list" id="issueList"></div>
+    </aside>
+    <section class="panel main">
+      <div class="hero" id="hero"></div>
+      <div class="graph-wrap">
+        <svg id="graph" viewBox="0 0 1100 740" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="tooltip" id="tooltip"></div>
+        <div class="non-core-panel" id="nonCorePanel">
+          <div class="non-core-head">
+            <strong id="nonCoreTitle">Non-core issues</strong>
+            <button id="closeNonCorePanel" type="button">Close</button>
+          </div>
+          <div class="non-core-form">
+            <input id="nonCoreInput" placeholder="owner/repo#123" />
+            <button id="addNonCoreIssue" type="button">Add</button>
+          </div>
+          <div class="non-core-list" id="nonCoreList"></div>
+        </div>
+        <div class="graph-tools">
+          <div class="node-type-toggle" aria-label="Node type filter">
+            <button class="node-type-btn" type="button" data-node-type="issue">Issues</button>
+            <button class="node-type-btn" type="button" data-node-type="pull_request">+ PR</button>
+            <button class="node-type-btn" type="button" data-node-type="commit">+ Commit</button>
+            <button class="node-type-btn" type="button" data-node-type="all">All</button>
+          </div>
+          <button id="toggleNonCore" type="button">Hide non-core</button>
+          <button id="editNonCore" type="button">Edit non-core</button>
+          <div class="layout-toggle" aria-label="Graph layout">
+            <button class="layout-btn" type="button" data-layout="ring">Rings</button>
+            <button class="layout-btn" type="button" data-layout="timeline">Timeline</button>
+          </div>
+          <span class="graph-hint">Wheel zoom · drag pan</span>
+          <button id="fitGraph" type="button">Fit</button>
+          <button id="expandGraph" type="button">Full</button>
+        </div>
+      </div>
+      <div class="footer">
+        <span><i class="dot" style="background:var(--root)"></i>Root issue</span>
+        <span><i class="dot" style="background:var(--issue)"></i>Internal issue</span>
+        <span><i class="dot" style="background:var(--external-issue)"></i>External issue</span>
+        <span><i class="dot" style="background:var(--non-core)"></i>Non-core issue</span>
+        <span><i class="dot" style="background:var(--pr)"></i>PR</span>
+        <span><i class="dot" style="background:var(--commit)"></i>Commit</span>
+        <span>Thicker/darker edges are closer hops.</span>
+        <span id="nodeInfo">Click issue nodes to recenter the multi-hop graph.</span>
+      </div>
+    </section>
+  </main>
+  <script>window.__ISSUE_MULTI_HOP_DATA_CHUNKS__ = [];</script>
+  <script src="robot-middleware-issue-relation-multi-hop_data/chunk_000.js"></script>
+  <script src="robot-middleware-issue-relation-multi-hop_data/chunk_001.js"></script>
+  <script src="robot-middleware-issue-relation-multi-hop_data/chunk_002.js"></script>
+  <script>
+    const data = JSON.parse((window.__ISSUE_MULTI_HOP_DATA_CHUNKS__ || []).join(''));
+    window.__ISSUE_MULTI_HOP_DATA_CHUNKS__ = null;
+    const issues = data.issues || [];
+    const graph = data.graph || { nodes: [], edges: [], adjacency: {} };
+    const nonCoreIssueRows = data.non_core_issues || [];
+    const initialNonCoreIssueRows = nonCoreIssueRows.map(item => ({ issue_uid: item.issue_uid, reason: item.reason || 'non-core bridge issue' }));
+    const nonCoreIssueReasons = new Map();
+    const nonCoreIssueKeys = new Set();
+    const nodesByKey = new Map((graph.nodes || []).map(node => [node.key, node]));
+    const edgeList = graph.edges || [];
+    const adjacency = graph.adjacency || {};
+    const firstSeenByNode = new Map();
+    edgeList.forEach(edge => {
+      const ts = Date.parse(edge.created_at || '');
+      if (!ts) return;
+      [edge.source, edge.target].forEach(key => {
+        if (!firstSeenByNode.has(key) || ts < firstSeenByNode.get(key)) firstSeenByNode.set(key, ts);
+      });
+    });
+    const issueRoots = issues.map(issue => issue.root_key);
+    const uidToRoot = new Map(issues.map(issue => [issue.issue_uid, issue.root_key]));
+    const rootToIssue = new Map(issues.map(issue => [issue.root_key, issue]));
+    const state = { selected: issueRoots[0], query: '', phase: 'all', target: 'all', repo: 'all', hops: '2', layout: 'ring', sortMode: 'score', nodeTypeFilter: 'issue', issueState: 'all', externalIssues: 'show', hideNonCore: false };
+    const graphView = { base: { x: 0, y: 0, width: 1100, height: 740 }, current: { x: 0, y: 0, width: 1100, height: 740 }, dragging: false, start: null };
+    const $ = id => document.getElementById(id);
+    function esc(value) {
+      return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+    function labelFor(node) {
+      if (!node) return '';
+      if (node.type === 'commit') return `${node.repo}@${String(node.sha || '').slice(0, 10)}`;
+      return `${node.repo}#${node.number || ''}`;
+    }
+    function statusClass(node) {
+      const s = String(node.state || '').toLowerCase();
+      if (node.merged === true || s === 'merged') return 'merged';
+      if (s === 'closed') return 'closed';
+      if (s === 'open') return 'open';
+      return '';
+    }
+    function scoreFor(issue) {
+      const counts = issue.counts || {};
+      return (counts.pull_request || 0) + (counts.issue || 0) * 3 + (counts.commit || 0) * 0.2;
+    }
+    function isInternalIssue(node) {
+      return node?.type === 'issue' && rootToIssue.has(node.key);
+    }
+    function isExternalIssue(node) {
+      return node?.type === 'issue' && !rootToIssue.has(node.key);
+    }
+    function isNonCoreIssue(node) {
+      return node?.type === 'issue' && nonCoreIssueKeys.has(node.key);
+    }
+    function normalizeIssueUid(value) {
+      return String(value || '').trim().replace(/^issue:/, '');
+    }
+    function resetNonCoreIssues() {
+      nonCoreIssueKeys.clear();
+      nonCoreIssueReasons.clear();
+      initialNonCoreIssueRows.forEach(item => {
+        const uid = normalizeIssueUid(item.issue_uid);
+        if (!uid) return;
+        const key = `issue:${uid}`;
+        nonCoreIssueKeys.add(key);
+        nonCoreIssueReasons.set(key, item.reason || 'non-core bridge issue');
+      });
+    }
+    function addNonCoreIssue(uid, reason = 'added in page session') {
+      const normalized = normalizeIssueUid(uid);
+      if (!normalized) return;
+      const key = `issue:${normalized}`;
+      nonCoreIssueKeys.add(key);
+      nonCoreIssueReasons.set(key, reason);
+    }
+    function removeNonCoreIssue(key) {
+      nonCoreIssueKeys.delete(key);
+      nonCoreIssueReasons.delete(key);
+    }
+    function renderNonCoreList() {
+      const rows = [...nonCoreIssueKeys].sort().map(key => {
+        const node = nodesByKey.get(key);
+        const uid = key.replace(/^issue:/, '');
+        return { key, uid, label: node ? labelFor(node) : uid, title: node?.title || '', reason: nonCoreIssueReasons.get(key) || '' };
+      });
+      $('nonCoreTitle').textContent = `Non-core issues (${rows.length})`;
+      $('nonCoreList').innerHTML = rows.map(row => `<div class="non-core-row">
+        <div><b>${esc(row.label)}</b><span>${esc(row.reason)}${row.title ? ` · ${esc(row.title)}` : ''}</span></div>
+        <button type="button" data-key="${esc(row.key)}">Remove</button>
+      </div>`).join('');
+      $('nonCoreList').querySelectorAll('button[data-key]').forEach(button => {
+        button.addEventListener('click', () => {
+          removeNonCoreIssue(button.dataset.key);
+          renderNonCoreList();
+          renderGraph();
+        });
+      });
+    }
+    function toggleNonCorePanel(open = undefined) {
+      const panel = $('nonCorePanel');
+      const shouldOpen = open === undefined ? !panel.classList.contains('open') : open;
+      panel.classList.toggle('open', shouldOpen);
+      if (shouldOpen) renderNonCoreList();
+    }
+    function nodeTimeValue(node) {
+      const issue = rootToIssue.get(node?.key);
+      const candidates = [
+        node?.created_at,
+        issue?.created_at,
+        node?.merged_at,
+        node?.updated_at,
+        issue?.updated_at,
+        node?.closed_at,
+        issue?.closed_at,
+      ];
+      for (const value of candidates) {
+        const ts = Date.parse(value || '');
+        if (ts) return ts;
+      }
+      return firstSeenByNode.get(node?.key) || 0;
+    }
+    function nodeTimeLabel(node) {
+      const ts = nodeTimeValue(node);
+      return ts ? new Date(ts).toISOString().slice(0, 10) : 'time unknown';
+    }
+    function timeLabel(ts, span) {
+      const date = new Date(ts);
+      return span > 1000 * 60 * 60 * 24 * 365 * 2
+        ? String(date.getUTCFullYear())
+        : date.toISOString().slice(0, 7);
+    }
+    function filteredIssues() {
+      const tokens = state.query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      const rows = issues.filter(issue => {
+        const phases = issue.phase_labels || (issue.phase_label ? [issue.phase_label] : []);
+        if (state.phase !== 'all' && !phases.includes(state.phase)) return false;
+        if (state.target !== 'all' && issue.target !== state.target) return false;
+        if (state.repo !== 'all' && issue.repo !== state.repo) return false;
+        if (state.issueState !== 'all' && String(issue.state || '').toLowerCase() !== state.issueState) return false;
+        if (!tokens.length) return true;
+        const haystack = [issue.issue_uid, issue.repo, issue.title, issue.affected_module, String(issue.number), phases.join(' ')].join(' ').toLowerCase();
+        return tokens.every(token => haystack.includes(token));
+      });
+      return rows.sort((a, b) => {
+        if (state.sortMode === 'edges') return (b.counts.edge || 0) - (a.counts.edge || 0);
+        if (state.sortMode === 'updated') return (Date.parse(b.updated_at || '') || 0) - (Date.parse(a.updated_at || '') || 0);
+        return scoreFor(b) - scoreFor(a);
+      });
+    }
+    function updateRepoFilter() {
+      const repos = [...new Set(issues.filter(i => {
+        const phases = i.phase_labels || (i.phase_label ? [i.phase_label] : []);
+        if (state.phase !== 'all' && !phases.includes(state.phase)) return false;
+        return state.target === 'all' || i.target === state.target;
+      }).map(i => i.repo))].sort();
+      $('repoFilter').innerHTML = '<option value="all">All repos</option>' + repos.map(repo => `<option value="${esc(repo)}">${esc(repo)}</option>`).join('');
+      if (state.repo !== 'all' && !repos.includes(state.repo)) state.repo = 'all';
+      $('repoFilter').value = state.repo;
+    }
+    function initFilters() {
+      const phases = [...new Set(issues.flatMap(i => i.phase_labels || (i.phase_label ? [i.phase_label] : [])))].sort();
+      $('phaseFilter').innerHTML = '<option value="all">All phases</option>' + phases.map(phase => `<option value="${esc(phase)}">${esc(phase)}</option>`).join('');
+      const targets = [...new Set(issues.map(i => i.target))].sort();
+      $('targetFilter').innerHTML = '<option value="all">All targets</option>' + targets.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('');
+      const phaseCounts = data.phase_issue_counts || {};
+      $('datasetInfo').textContent = `${data.issue_count.toLocaleString()} unique issues · phase1 ${Number(phaseCounts.phase1 || 0).toLocaleString()} · phase2 ${Number(phaseCounts.phase2 || 0).toLocaleString()} · ${data.node_count.toLocaleString()} nodes · ${data.edge_count.toLocaleString()} edges`;
+      const params = new URLSearchParams(window.location.search);
+      const requestedIssue = params.get('issue') || params.get('uid') || '';
+      const preferred = uidToRoot.get(requestedIssue) || uidToRoot.get('ros2/rclcpp#392') || uidToRoot.get('dora-rs/dora#1707');
+      if (preferred) state.selected = preferred;
+      resetNonCoreIssues();
+      updateRepoFilter();
+    }
+    function allowedNode(node, rootKey) {
+      if (!node || node.key === rootKey) return true;
+      if (state.hideNonCore && isNonCoreIssue(node)) return false;
+      if (isExternalIssue(node) && state.externalIssues === 'hide') return false;
+      if (state.nodeTypeFilter === 'all') return true;
+      if (state.nodeTypeFilter === 'issue') return node.type === 'issue';
+      if (state.nodeTypeFilter === 'pull_request') return node.type === 'issue' || node.type === 'pull_request';
+      if (state.nodeTypeFilter === 'commit') return node.type === 'issue' || node.type === 'commit';
+      return true;
+    }
+    function updateNodeTypeControls() {
+      $('nodeTypeFilter').value = state.nodeTypeFilter;
+      document.querySelectorAll('.node-type-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.nodeType === state.nodeTypeFilter);
+      });
+    }
+    function updateLayoutControls() {
+      $('layoutMode').value = state.layout;
+      document.querySelectorAll('.layout-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.layout === state.layout);
+      });
+      $('toggleNonCore').textContent = state.hideNonCore ? 'Show non-core' : 'Hide non-core';
+    }
+    function hopLimitValue() {
+      return state.hops === 'all' ? Number.POSITIVE_INFINITY : Number(state.hops || 1);
+    }
+    function reachableMaxDepth(rootKey) {
+      const visited = new Map([[rootKey, 0]]);
+      const queue = [rootKey];
+      let maxDepth = 0;
+      while (queue.length) {
+        const key = queue.shift();
+        const depth = visited.get(key) || 0;
+        maxDepth = Math.max(maxDepth, depth);
+        for (const next of adjacency[key] || []) {
+          if (visited.has(next)) continue;
+          const node = nodesByKey.get(next);
+          if (!allowedNode(node, rootKey)) continue;
+          visited.set(next, depth + 1);
+          queue.push(next);
+        }
+      }
+      return maxDepth;
+    }
+    function updateHopOptions() {
+      const maxDepth = Math.max(1, reachableMaxDepth(state.selected));
+      if (state.hops !== 'all' && Number(state.hops || 1) > maxDepth) state.hops = String(maxDepth);
+      const options = [];
+      for (let depth = 1; depth <= maxDepth; depth += 1) {
+        options.push(`<option value="${depth}">${depth} hop${depth === 1 ? '' : 's'}</option>`);
+      }
+      options.push('<option value="all">All reachable</option>');
+      $('hopLimit').innerHTML = options.join('');
+      $('hopLimit').value = state.hops;
+    }
+    function subgraph(rootKey) {
+      const maxHop = hopLimitValue();
+      const visited = new Map([[rootKey, 0]]);
+      const queue = [rootKey];
+      while (queue.length) {
+        const key = queue.shift();
+        const depth = visited.get(key) || 0;
+        if (depth >= maxHop) continue;
+        const neighbors = adjacency[key] || [];
+        for (const next of neighbors) {
+          if (visited.has(next)) continue;
+          const node = nodesByKey.get(next);
+          if (!allowedNode(node, rootKey)) continue;
+          visited.set(next, depth + 1);
+          queue.push(next);
+        }
+      }
+      const nodeKeys = new Set(visited.keys());
+      const edges = edgeList.filter(edge => nodeKeys.has(edge.source) && nodeKeys.has(edge.target));
+      return { nodeKeys, depths: visited, edges };
+    }
+    function ringPositionsFor(rootKey, sg) {
+      const center = { x: 550, y: 370 };
+      const nodes = [...sg.nodeKeys].map(key => nodesByKey.get(key)).filter(Boolean);
+      const byDepth = new Map();
+      nodes.forEach(node => {
+        const depth = sg.depths.get(node.key) || 0;
+        if (!byDepth.has(depth)) byDepth.set(depth, []);
+        byDepth.get(depth).push(node);
+      });
+      const map = new Map();
+      map.set(rootKey, { ...nodesByKey.get(rootKey), x: center.x, y: center.y, r: 28 });
+      for (const [depth, group] of byDepth.entries()) {
+        if (depth === 0) continue;
+        group.sort((a, b) => String(a.type).localeCompare(String(b.type)) || labelFor(a).localeCompare(labelFor(b)));
+        const radius = 120 + depth * 135;
+        const count = group.length;
+        group.forEach((node, index) => {
+          const angle = (Math.PI * 2 * index / Math.max(1, count)) - Math.PI / 2 + depth * 0.18;
+          const r = node.type === 'commit' ? 12 : node.type === 'pull_request' ? 16 : 17;
+          map.set(node.key, { ...node, x: center.x + Math.cos(angle) * radius, y: center.y + Math.sin(angle) * radius, r });
+        });
+      }
+      return map;
+    }
+    function timelinePositionsFor(rootKey, sg) {
+      const nodes = [...sg.nodeKeys].map(key => nodesByKey.get(key)).filter(Boolean);
+      const timedNodes = nodes.map((node, index) => ({ node, index, time: nodeTimeValue(node) || 0 }));
+      const knownTimes = timedNodes.map(item => item.time).filter(Boolean);
+      const minTime = knownTimes.length ? Math.min(...knownTimes) : 0;
+      const maxTime = knownTimes.length ? Math.max(...knownTimes) : minTime;
+      const span = Math.max(1, maxTime - minTime);
+      const width = Math.max(1100, Math.sqrt(Math.max(1, timedNodes.length)) * 520);
+      const depthBuckets = new Map();
+      const sorted = timedNodes.sort((a, b) => (a.time || Number.MAX_SAFE_INTEGER) - (b.time || Number.MAX_SAFE_INTEGER) || labelFor(a.node).localeCompare(labelFor(b.node)));
+      const map = new Map();
+      sorted.forEach((item, order) => {
+        const node = item.node;
+        const depth = sg.depths.get(node.key) || 0;
+        const bucketKey = `${depth}:${item.time ? new Date(item.time).toISOString().slice(0, 7) : 'unknown'}`;
+        const lane = depthBuckets.get(bucketKey) || 0;
+        depthBuckets.set(bucketKey, lane + 1);
+        const x = item.time ? 120 + ((item.time - minTime) / span) * width : 120 + order * 42;
+        const y = 120 + depth * 150 + (lane % 7) * 24;
+        const r = node.key === rootKey ? 28 : node.type === 'commit' ? 12 : node.type === 'pull_request' ? 16 : 17;
+        map.set(node.key, { ...node, x, y, r });
+      });
+      return map;
+    }
+    function positionsFor(rootKey, sg) {
+      return state.layout === 'timeline' ? timelinePositionsFor(rootKey, sg) : ringPositionsFor(rootKey, sg);
+    }
+    function fitViewBox(positions) {
+      const values = [...positions.values()];
+      if (!values.length) return { x: 0, y: 0, width: 1100, height: 740 };
+      const padding = 96;
+      const minX = Math.min(...values.map(node => node.x - (node.r || 14))) - padding;
+      const maxX = Math.max(...values.map(node => node.x + (node.r || 14))) + padding;
+      const minY = Math.min(...values.map(node => node.y - (node.r || 14))) - padding;
+      const timelineExtra = state.layout === 'timeline' ? 120 : 0;
+      const maxY = Math.max(...values.map(node => node.y + (node.r || 14) + 20)) + padding + timelineExtra;
+      const width = Math.max(360, maxX - minX);
+      const height = Math.max(260, maxY - minY);
+      return { x: minX, y: minY, width, height };
+    }
+    function renderTimelineAxis(positions) {
+      if (state.layout !== 'timeline') return '';
+      const nodes = [...positions.values()]
+        .map(node => ({ node, time: nodeTimeValue(node) }))
+        .filter(item => item.time);
+      if (nodes.length < 2) return '';
+      const minTime = Math.min(...nodes.map(item => item.time));
+      const maxTime = Math.max(...nodes.map(item => item.time));
+      const minX = Math.min(...nodes.map(item => item.node.x));
+      const maxX = Math.max(...nodes.map(item => item.node.x));
+      const minY = Math.min(...[...positions.values()].map(node => node.y));
+      const maxY = Math.max(...[...positions.values()].map(node => node.y + (node.r || 14) + 20));
+      const axisY = maxY + 72;
+      const gridTop = minY - 46;
+      const span = Math.max(1, maxTime - minTime);
+      const tickCount = Math.min(10, Math.max(3, Math.round((maxX - minX) / 220)));
+      const ticks = Array.from({ length: tickCount }, (_, index) => {
+        const ratio = tickCount === 1 ? 0 : index / (tickCount - 1);
+        const time = minTime + span * ratio;
+        const x = minX + (maxX - minX) * ratio;
+        return `<g class="time-tick">
+          <line class="tick-line" x1="${x}" y1="${gridTop}" x2="${x}" y2="${axisY}"></line>
+          <line class="tick-mark" x1="${x}" y1="${axisY - 7}" x2="${x}" y2="${axisY + 7}"></line>
+          <text x="${x}" y="${axisY + 28}" text-anchor="middle">${esc(timeLabel(time, span))}</text>
+        </g>`;
+      }).join('');
+      return `<g class="time-axis">
+        <line class="axis-line" x1="${minX}" y1="${axisY}" x2="${maxX}" y2="${axisY}"></line>
+        ${ticks}
+        <text class="axis-title" x="${minX}" y="${axisY - 14}" text-anchor="start">Timeline</text>
+      </g>`;
+    }
+    function setViewBox(box) {
+      graphView.current = { ...box };
+      $('graph').setAttribute('viewBox', `${box.x} ${box.y} ${box.width} ${box.height}`);
+    }
+    function resetGraphView() {
+      setViewBox(graphView.base);
+    }
+    function renderList() {
+      const list = filteredIssues();
+      $('listSummary').textContent = `${list.length.toLocaleString()} matching issues · showing top 1000`;
+      if (!list.some(issue => issue.root_key === state.selected) && list[0]) state.selected = list[0].root_key;
+      $('issueList').innerHTML = list.slice(0, 1000).map(issue => {
+        const active = issue.root_key === state.selected ? ' active' : '';
+        const phases = issue.phase_labels || (issue.phase_label ? [issue.phase_label] : []);
+        return `<div class="issue-card${active}" data-root="${esc(issue.root_key)}">
+          <strong>${esc(issue.issue_uid)} · ${esc(issue.title || '(untitled)')}</strong>
+          <small>${esc(phases.join('+') || 'phase?')} · ${esc(issue.repo)} · ${esc(issue.state || '')} · updated ${esc(issue.updated_at || '')}</small>
+          ${issue.affected_module ? `<div class="module">${esc(issue.affected_module)}</div>` : ''}
+          <div class="pills"><span class="pill score">Rel ${scoreFor(issue).toFixed(1)}</span><span class="pill">PR ${issue.counts.pull_request}</span><span class="pill issue">Issue ${issue.counts.issue}</span><span class="pill commit">Commit ${issue.counts.commit}</span><span class="pill">Edge ${issue.counts.edge}</span></div>
+        </div>`;
+      }).join('');
+      document.querySelectorAll('.issue-card').forEach(card => card.addEventListener('click', () => {
+        state.selected = card.dataset.root;
+        render();
+      }));
+    }
+    function renderHero(sg) {
+      const issue = rootToIssue.get(state.selected) || issues[0];
+      if (!issue) return;
+      const nodes = [...sg.nodeKeys].map(key => nodesByKey.get(key)).filter(Boolean);
+      const counts = {
+        issue: nodes.filter(n => n.type === 'issue').length,
+        internal_issue: nodes.filter(n => isInternalIssue(n)).length,
+        external_issue: nodes.filter(n => isExternalIssue(n)).length,
+        non_core: nodes.filter(n => isNonCoreIssue(n)).length,
+        pull_request: nodes.filter(n => n.type === 'pull_request').length,
+        commit: nodes.filter(n => n.type === 'commit').length,
+      };
+      $('hero').innerHTML = `<div>
+        <h2>${esc(issue.issue_uid)} · ${esc(issue.title || '(untitled)')}</h2>
+        <div class="meta">${esc((issue.phase_labels || [issue.phase_label || 'phase?']).join('+'))} · ${esc(issue.repo)} · ${esc(issue.state || '')} · ${issue.url ? `<a target="_blank" rel="noreferrer" href="${esc(issue.url)}">Open on GitHub</a>` : ''}</div>
+        <div class="meta" style="margin-top:7px">Module: ${esc(issue.affected_module || 'not available')} · relation score ${scoreFor(issue).toFixed(1)}${state.hideNonCore ? ' · non-core hidden' : ''}</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>${sg.nodeKeys.size}</b><span>Nodes</span></div>
+        <div class="stat"><b>${sg.edges.length}</b><span>Edges</span></div>
+        <div class="stat"><b>${counts.internal_issue}</b><span>Internal</span></div>
+        <div class="stat"><b>${counts.external_issue}</b><span>External</span></div>
+        <div class="stat"><b>${counts.non_core}</b><span>Non-core</span></div>
+        <div class="stat"><b>${counts.pull_request + counts.commit}</b><span>PR/Commit</span></div>
+      </div>`;
+    }
+    function tooltipHtml(node, depth) {
+      const issue = rootToIssue.get(node.key);
+      const module = issue?.affected_module || node.affected_module || '';
+      const scope = isInternalIssue(node) ? 'internal issue' : isExternalIssue(node) ? 'external issue' : (node.type || '');
+      const nonCore = isNonCoreIssue(node) ? `<br>non-core: ${esc(nonCoreIssueReasons.get(node.key) || '')}` : '';
+      return `<b>${esc(labelFor(node))}</b>${esc(scope)} · hop ${depth}${node.state ? ` · ${esc(node.state)}` : ''}<br>time: ${esc(nodeTimeLabel(node))}${nonCore}<br>${esc(node.title || '')}${module ? `<br>module: ${esc(module)}` : ''}${node.url ? `<br>${esc(node.url)}` : ''}`;
+    }
+    function renderGraph() {
+      updateNodeTypeControls();
+      updateLayoutControls();
+      updateHopOptions();
+      const sg = subgraph(state.selected);
+      renderHero(sg);
+      const positions = positionsFor(state.selected, sg);
+      const svg = $('graph');
+      const tooltip = $('tooltip');
+      graphView.base = fitViewBox(positions);
+      setViewBox(graphView.base);
+      const axisSvg = renderTimelineAxis(positions);
+      const edgeSvg = sg.edges.map(edge => {
+        const s = positions.get(edge.source), t = positions.get(edge.target);
+        if (!s || !t) return '';
+        const hop = Math.min(sg.depths.get(edge.source) || 0, sg.depths.get(edge.target) || 0) + 1;
+        return `<line class="edge hop${Math.min(hop, 3)}" x1="${s.x}" y1="${s.y}" x2="${t.x}" y2="${t.y}">
+          <title>${esc(edge.relation)} · ${esc(edge.evidence_source)} · ${esc(edge.evidence_text)}</title>
+        </line>`;
+      }).join('');
+      const nodeSvg = [...positions.values()].map(node => {
+        const depth = sg.depths.get(node.key) || 0;
+        const classes = ['node', isExternalIssue(node) ? 'external_issue' : node.type, isNonCoreIssue(node) ? 'non_core' : '', statusClass(node), node.key === state.selected ? 'root' : ''].join(' ');
+        const label = labelFor(node);
+        return `<g class="${classes}" data-key="${esc(node.key)}" data-depth="${depth}" transform="translate(${node.x},${node.y})">
+          <circle r="${node.r}"></circle>
+          <text x="0" y="${node.r + 16}" text-anchor="middle">${esc(label.length > 32 ? label.slice(0, 29) + '...' : label)}</text>
+        </g>`;
+      }).join('');
+      svg.innerHTML = axisSvg + edgeSvg + nodeSvg;
+      svg.querySelectorAll('.node').forEach(el => {
+        const node = positions.get(el.dataset.key);
+        const depth = Number(el.dataset.depth || 0);
+        el.addEventListener('mousemove', event => {
+          tooltip.style.opacity = '1';
+          tooltip.style.left = event.offsetX + 'px';
+          tooltip.style.top = event.offsetY + 'px';
+          tooltip.innerHTML = tooltipHtml(node, depth);
+        });
+        el.addEventListener('mouseleave', () => { tooltip.style.opacity = '0'; });
+        el.addEventListener('click', () => {
+          $('nodeInfo').innerHTML = `<b>${esc(labelFor(node))}</b> · ${esc(node.type || '')}${node.url ? ` · <a target="_blank" rel="noreferrer" href="${esc(node.url)}">Open</a>` : ''}`;
+          if (node.type === 'issue' && rootToIssue.has(node.key) && node.key !== state.selected) {
+            state.selected = node.key;
+            render();
+          } else if (node.type !== 'issue' && node.url) {
+            window.open(node.url, '_blank', 'noreferrer');
+          }
+        });
+      });
+    }
+    function render() {
+      renderList();
+      renderGraph();
+    }
+    $('search').addEventListener('input', e => { state.query = e.target.value; render(); });
+    $('phaseFilter').addEventListener('change', e => { state.phase = e.target.value; updateRepoFilter(); render(); });
+    $('targetFilter').addEventListener('change', e => { state.target = e.target.value; updateRepoFilter(); render(); });
+    $('repoFilter').addEventListener('change', e => { state.repo = e.target.value; render(); });
+    $('hopLimit').addEventListener('change', e => { state.hops = e.target.value; renderGraph(); });
+    $('layoutMode').addEventListener('change', e => { state.layout = e.target.value; renderGraph(); });
+    $('sortMode').addEventListener('change', e => { state.sortMode = e.target.value; render(); });
+    $('nodeTypeFilter').addEventListener('change', e => { state.nodeTypeFilter = e.target.value; renderGraph(); });
+    $('externalIssueFilter').addEventListener('change', e => { state.externalIssues = e.target.value; renderGraph(); });
+    $('toggleNonCore').addEventListener('click', () => { state.hideNonCore = !state.hideNonCore; renderGraph(); });
+    $('editNonCore').addEventListener('click', () => toggleNonCorePanel());
+    $('closeNonCorePanel').addEventListener('click', () => toggleNonCorePanel(false));
+    $('addNonCoreIssue').addEventListener('click', () => {
+      addNonCoreIssue($('nonCoreInput').value);
+      $('nonCoreInput').value = '';
+      renderNonCoreList();
+      renderGraph();
+    });
+    $('nonCoreInput').addEventListener('keydown', event => {
+      if (event.key !== 'Enter') return;
+      addNonCoreIssue(event.target.value);
+      event.target.value = '';
+      renderNonCoreList();
+      renderGraph();
+    });
+    document.querySelectorAll('.node-type-btn').forEach(button => button.addEventListener('click', () => {
+      state.nodeTypeFilter = button.dataset.nodeType || 'issue';
+      renderGraph();
+    }));
+    document.querySelectorAll('.layout-btn').forEach(button => button.addEventListener('click', () => {
+      state.layout = button.dataset.layout || 'ring';
+      renderGraph();
+    }));
+    $('stateFilter').addEventListener('change', e => { state.issueState = e.target.value; render(); });
+    $('fitGraph').addEventListener('click', resetGraphView);
+    $('expandGraph').addEventListener('click', () => {
+      document.body.classList.toggle('graph-expanded');
+      $('expandGraph').textContent = document.body.classList.contains('graph-expanded') ? 'Exit' : 'Full';
+      requestAnimationFrame(resetGraphView);
+    });
+    $('graph').addEventListener('wheel', event => {
+      event.preventDefault();
+      const svg = $('graph');
+      const rect = svg.getBoundingClientRect();
+      const box = graphView.current;
+      const mouseX = box.x + (event.clientX - rect.left) / rect.width * box.width;
+      const mouseY = box.y + (event.clientY - rect.top) / rect.height * box.height;
+      const factor = event.deltaY > 0 ? 1.16 : 0.86;
+      const newWidth = Math.max(120, box.width * factor);
+      const newHeight = Math.max(90, box.height * factor);
+      const next = {
+        x: mouseX - (mouseX - box.x) * (newWidth / box.width),
+        y: mouseY - (mouseY - box.y) * (newHeight / box.height),
+        width: newWidth,
+        height: newHeight,
+      };
+      setViewBox(next);
+    }, { passive: false });
+    $('graph').addEventListener('pointerdown', event => {
+      graphView.dragging = true;
+      graphView.start = { x: event.clientX, y: event.clientY, box: { ...graphView.current } };
+      $('graph').setPointerCapture(event.pointerId);
+      document.querySelector('.graph-wrap').classList.add('panning');
+    });
+    $('graph').addEventListener('pointermove', event => {
+      if (!graphView.dragging || !graphView.start) return;
+      const svg = $('graph');
+      const rect = svg.getBoundingClientRect();
+      const dx = (event.clientX - graphView.start.x) / rect.width * graphView.start.box.width;
+      const dy = (event.clientY - graphView.start.y) / rect.height * graphView.start.box.height;
+      setViewBox({
+        x: graphView.start.box.x - dx,
+        y: graphView.start.box.y - dy,
+        width: graphView.start.box.width,
+        height: graphView.start.box.height,
+      });
+    });
+    function stopPan(event) {
+      graphView.dragging = false;
+      graphView.start = null;
+      document.querySelector('.graph-wrap').classList.remove('panning');
+      if (event?.pointerId !== undefined) {
+        try { $('graph').releasePointerCapture(event.pointerId); } catch (_) {}
+      }
+    }
+    $('graph').addEventListener('pointerup', stopPan);
+    $('graph').addEventListener('pointerleave', stopPan);
+    initFilters();
+    render();
+  </script>
+</body>
+</html>

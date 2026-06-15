@@ -544,7 +544,7 @@ days_since_last_activity > warm_days: recency = recency_cold</div>
       return `multi_hop_network_visualization/issue_relation_multi_hop.html?issue=${encodeURIComponent(issue.issue_uid)}`;
     }
     function combinedMultiHopUrl(issue) {
-      return `../multi_hop_network_visualization/issue_relation_combined_multi_hop.html?issue=${encodeURIComponent(issue.issue_uid)}`;
+      return `robot-middleware-issue-relation-multi-hop.html?issue=${encodeURIComponent(issue.issue_uid)}`;
     }
     function labelFor(node) {
       if (!node) return '';
