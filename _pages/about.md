@@ -31,11 +31,15 @@ I am a Ph.D. candidate at the <b>School of Computer Science and Technology, Shan
 # <i class="fa fa-microchip"></i> Current Direction
 
 <p align="justify">
-I am currently exploring the systems layer of robot middleware for embodied AI: how learned robot policies can be executed reliably across real robots and networked robot teams. I am particularly interested in the performance, reliability, and security challenges of deploying embodied-AI systems in real-world environments.
+My long-term research goal is to develop trustworthy and high-performance systems infrastructure for embodied and networked robots. I focus on secure and dependable data planes for embodied AI systems, where learned policies, sensor streams, actuator commands, and coordination states are transferred efficiently and safely within a robot and across collaborating robots.
 </p>
 
 <p align="justify">
-My long-term goal is to build dependable and scalable systems infrastructure for embodied AI, enabling robots to operate safely and efficiently in real-world environments, both individually and as part of multi-robot systems. Toward this goal, I am interested in several directions: robust coordination and collective decision-making for multi-robot systems using wireless BFT consensus; system-level support for embodied AI, such as ROS 2 and Dora, with a focus on improving the reliability, efficiency, and security of robot learning workloads in real-world environments.
+My current research addresses this problem through three interconnected layers. At the intra-robot layer, I investigate secure and high-performance data planes based on shared memory, with an emphasis on zero-copy communication and precise ownership tracking to ensure correct resource lifecycle management and isolation. At the inter-robot layer, I study communication planes built on middleware and networking substrates such as DDS and Zenoh, aiming to preserve performance and security semantics across robots. At the coordination layer, I explore dependable decision planes for multi-robot systems by developing Byzantine fault-tolerant consensus protocols that ensure distributed state consistency and enable the verification of safety-critical collective decisions.
+</p>
+
+<p align="justify">
+ROS 2 currently serves as my primary experimental platform because it provides a realistic and widely adopted software stack for embodied AI systems. However, my research is not confined to ROS 2. My broader objective is to develop abstractions and mechanisms that generalize to DDS, iceoryx, zenoh, and other data-intensive publish/subscribe systems, while using ROS 2 as an integrated environment for implementation, experimentation, and evaluation.
 </p>
 
 ---
