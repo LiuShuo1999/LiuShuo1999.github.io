@@ -42,6 +42,17 @@ My current research addresses this problem through three interconnected layers. 
 ROS 2 currently serves as my primary experimental platform because it provides a realistic and widely adopted software stack for embodied AI systems. However, my research is not confined to ROS 2. My broader objective is to develop abstractions and mechanisms that generalize to DDS, iceoryx, zenoh, and other data-intensive publish/subscribe systems, while using ROS 2 as an integrated environment for implementation, experimentation, and evaluation.
 </p>
 
+## Shared-Memory Message Passing in Robotics Middleware and Runtimes
+
+My research focuses on shared-memory message passing in robotics middleware and runtimes, including ROS 2, Dora-rs, HORUS, and Copper. I am particularly interested in four fundamental questions:
+
+1. **Performance Diversity:** Why do different robotics middleware systems excel in different benchmarks? How do workloads and architectural choices shape their performance?
+2. **Application Requirements:** What are the performance requirements of different robotics applications, and to what extent do existing systems satisfy them?
+3. **Performance Limits:** What are the theoretical and practical performance limits of shared-memory message passing under different workloads and system constraints?
+4. **Shared-Memory Models:** How do shared-memory models in robotics systems differ from those in traditional computer systems, and what techniques can be transferred between them?
+
+My goal is to understand the performance characteristics, fundamental limits, and design trade-offs of shared-memory communication, and to identify opportunities for systematic optimization.
+
 ---
 
 # <i class="fa fa-bullhorn"></i> News
